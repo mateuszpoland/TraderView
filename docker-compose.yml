@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  ws-server:
+    build:
+      context: .
+      dockerfile: Docker/ws-server/Dockerfile
