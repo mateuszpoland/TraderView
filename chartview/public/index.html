@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trading bot</title>
+</head>
+
+<body>
+    <h2>Trading overview</h2>
+    <div id="trading-pairs-btcusdt"></div>
+    <div id="trading-pairs-ethusdt"></div>
+    <div id="root"></div>
+</body>
+
+<script>
+    const ethusdt = new WebSocket('ws://localhost:8081/ethusdt');
+    const btcusdt = new WebSocket('ws://localhost:8081/btcusdt');
+
+    btcusdt.onmessage = (event) => {
+        const jsonMessage = JSON.parse(event.data);
+        console.log('BTC trading data: ', jsonMessage);
+        document.getElementById('trading-pairs-btcusdt').innerText = `${jsonMessage.s}:  High: ${jsonMessage.k.h} / Low: ${jsonMessage.k.l}`;
+    };
+
+    ethusdt.onmessage = (event) => {
+        const jsonMessage = JSON.parse(event.data);
+        console.log('ETH trading data: ', jsonMessage);
+        document.getElementById('trading-pairs-ethusdt').innerText = `${jsonMessage.s}:  High: ${jsonMessage.k.h} / Low: ${jsonMessage.k.l}`;
+    };
+
+</script>
+<script src="../../dashboard/scripts/chart.js"></script>
+</html>
